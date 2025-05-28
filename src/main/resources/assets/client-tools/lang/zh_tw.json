@@ -1,0 +1,6 @@
+{
+  "key.client-tools.open_bind_ui": "開啟綁定物品欄",
+  "key.client-tools.bind_inventory": "綁定現在物品欄",
+  "warning.empty.inventory": "沒找到任何在範圍內已綁定的物品欄",
+  "category.client-tools.keys": "客戶端工具"
+}

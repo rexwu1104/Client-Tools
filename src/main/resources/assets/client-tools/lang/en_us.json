@@ -1,0 +1,6 @@
+{
+  "key.client-tools.open_bind_ui": "Open bound inventory",
+  "key.client-tools.bind_inventory": "Bind current inventory",
+  "warning.empty.inventory": "Not found any bound inventory in range",
+  "category.client-tools.keys": "Client Tools"
+}
