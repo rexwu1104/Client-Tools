@@ -1,20 +1,35 @@
 package clienttools.configs.world
 
+import clienttools.ClientToolsClient
 import clienttools.configs.Config
 import clienttools.configs.ConfigManager
-import clienttools.utils.Constants
-import clienttools.utils.GlobalStorage
+import clienttools.tools.inventory.Inventories
+import clienttools.utils.storage.Constants
+import clienttools.utils.storage.GlobalStorage
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayNetworkHandler
 import net.minecraft.util.math.BlockPos
 
 abstract class WorldConfig : Config() {
     protected abstract val hash: String
-    protected val boundInventories: ArrayList<BlockPos> = arrayListOf()
+    private val boundInventories: MutableSet<BlockPos> = mutableSetOf()
 
     abstract fun getType(): Type
 
     override fun getIdentity(): String = hash
+
+    fun bindBlock(pos: BlockPos) {
+        ClientToolsClient.logger.info("bind pos: $pos")
+        if (pos in boundInventories)
+            boundInventories.remove(pos)
+        else
+            boundInventories.add(pos)
+        ClientToolsClient.logger.info("current positions: $boundInventories")
+    }
+
+    fun getInventories(): Inventories {
+        return Inventories(boundInventories.toList())
+    }
 
     enum class Type {
         Client,

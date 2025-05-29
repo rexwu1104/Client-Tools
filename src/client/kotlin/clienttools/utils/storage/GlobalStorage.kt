@@ -1,4 +1,6 @@
-package clienttools.utils
+package clienttools.utils.storage
+
+import clienttools.utils.storage.GlobalStorage.ValueUpdateCallback
 
 object GlobalStorage {
     private val data = hashMapOf<String, Wrapper<*>>()
@@ -30,14 +32,14 @@ object GlobalStorage {
         (data[key]!! as Wrapper<T>).onUpdate(value, callbacks[key] ?: listOf())
     }
 
+    fun keys(): Iterable<String> = data.keys
+
     fun remove(key: String): Boolean {
         return data.remove(key) != null
     }
 
     inline fun <reified T> observe(key: String, crossinline block: (T) -> Unit) {
-        addListener(key, object : ValueUpdateCallback<T> {
-            override fun onValueChange(value: T) = block(value)
-        })
+        addListener(key, ValueUpdateCallback<T> { value -> block(value) })
     }
 
     fun <T> addListener(key: String, callback: ValueUpdateCallback<T>) {
@@ -45,7 +47,7 @@ object GlobalStorage {
     }
 
     class Wrapper<T>(private var value: T) {
-        private val type = value!!::class.java
+        internal val type = value!!::class.java
 
         fun get(): T {
             return value
@@ -59,12 +61,11 @@ object GlobalStorage {
         }
 
         fun <T> isSameType(clazz: Class<T>): Boolean {
-            return type == clazz
+            return clazz.isAssignableFrom(type)
         }
     }
 
-    @FunctionalInterface
-    interface ValueUpdateCallback<T> {
+    fun interface ValueUpdateCallback<T> {
         fun onValueChange(value: T)
     }
 }

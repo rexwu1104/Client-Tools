@@ -1,7 +1,7 @@
 package clienttools.mixin.client;
 
-import clienttools.utils.Constants;
-import clienttools.utils.GlobalStorage;
+import clienttools.utils.storage.Constants;
+import clienttools.utils.storage.GlobalStorage;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryKey;

@@ -1,5 +1,6 @@
 package clienttools
 
+import clienttools.bindings.KeyManager
 import clienttools.configs.ConfigManager
 import clienttools.tools.ToolManager
 import com.mojang.logging.LogUtils
@@ -12,5 +13,6 @@ object ClientToolsClient : ClientModInitializer {
     override fun onInitializeClient() {
         ConfigManager.init()
         ToolManager.init()
+        KeyManager.init()
     }
 }

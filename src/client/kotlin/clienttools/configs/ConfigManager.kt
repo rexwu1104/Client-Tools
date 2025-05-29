@@ -1,11 +1,10 @@
 package clienttools.configs
 
-import clienttools.ClientToolsClient
 import clienttools.configs.world.WorldConfig
-import clienttools.utils.Constants
-import clienttools.utils.GlobalStorage
 import clienttools.utils.gson.GlobalGson
 import clienttools.utils.gson.GlobalGson.toJson
+import clienttools.utils.storage.Constants
+import clienttools.utils.storage.GlobalStorage
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.google.gson.stream.JsonReader
@@ -32,7 +31,7 @@ object ConfigManager {
             if (!worlds.any { it.getIdentity() == config.getIdentity() })
                 worlds.add(config)
 
-            ClientToolsClient.logger.info("Current worlds length: ${worlds.size}")
+//            ClientToolsClient.logger.info("Current worlds length: ${worlds.size}")
         }
     }
 
@@ -81,7 +80,7 @@ object ConfigManager {
         }
     }
 
-    fun <T : Config> checkExist(configType: Type, config: T) : Config {
+    fun checkExist(configType: Type, config: Config) : Config {
         return when (configType) {
             Type.World -> worlds.find { it.getIdentity() == config.getIdentity() } ?: config
         }
