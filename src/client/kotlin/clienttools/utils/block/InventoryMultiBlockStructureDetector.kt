@@ -25,7 +25,7 @@ object InventoryMultiBlockStructureDetector : MultiBlockStructureDetector() {
         this.pos = pos
     }
 
-    override fun getSurfaces(): Iterable<BlockPos> {
-        return Direction.entries.filter { it.axis.isHorizontal }.map { pos.offset(it) }
+    override fun getSurfaces(): Set<BlockPos> {
+        return Direction.entries.filter { it.axis.isHorizontal }.map { pos.offset(it) }.toSet()
     }
 }

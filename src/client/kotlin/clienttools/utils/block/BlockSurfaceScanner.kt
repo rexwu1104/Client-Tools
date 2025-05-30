@@ -14,7 +14,7 @@ object BlockSurfaceScanner {
         val detector = detectors.first { it.isNeedDetect(startPos, world) }.also { it.reset() }
         val surfaces = detector.detect(startPos, world).run { detector.getSurfaces() }
         for (surface in surfaces) {
-            collector.add(surface, world)
+            collector.add(surface, world, surfaces)
         }
 
         return collector.collect()
@@ -30,9 +30,9 @@ object BlockSurfaceScanner {
 
         abstract fun collect(): T
 
-        fun add(pos: BlockPos, world: World): Boolean {
+        fun add(pos: BlockPos, world: World, pivot: Set<BlockPos>): Boolean {
             return filters.filter {
-                if (it.allow(pos, world))
+                if (it.allow(pos, world, pivot))
                     targets.add(it.target())
                 else
                     false
@@ -62,7 +62,7 @@ object BlockSurfaceScanner {
     }
 
     abstract class Filter {
-        abstract fun allow(pos: BlockPos, world: World): Boolean
+        abstract fun allow(pos: BlockPos, world: World, pivot: Set<BlockPos>): Boolean
 
         abstract fun target(): Target
     }

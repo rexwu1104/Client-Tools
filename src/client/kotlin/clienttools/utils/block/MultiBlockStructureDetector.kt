@@ -12,5 +12,5 @@ abstract class MultiBlockStructureDetector {
 
     abstract fun detect(pos: BlockPos, world: World)
 
-    abstract fun getSurfaces(): Iterable<BlockPos>
+    abstract fun getSurfaces(): Set<BlockPos>
 }

@@ -41,7 +41,7 @@ object ChestMultiBlockStructureDetector : MultiBlockStructureDetector() {
         this.surfaces.addAll(surfaces)
     }
 
-    override fun getSurfaces(): Iterable<BlockPos> {
-        return surfaces.asIterable()
+    override fun getSurfaces(): Set<BlockPos> {
+        return surfaces.toSet()
     }
 }

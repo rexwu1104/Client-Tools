@@ -9,9 +9,12 @@ import net.minecraft.world.World
 object WallSignBlockFilter : BlockSurfaceScanner.Filter() {
     private var blockEntity: BlockEntity? = null
 
-    override fun allow(pos: BlockPos, world: World): Boolean {
+    override fun allow(pos: BlockPos, world: World, pivot: Set<BlockPos>): Boolean {
         val blockState = world.getBlockState(pos)
         if (blockState.block !is WallSignBlock)
+            return false
+
+        if (pos.offset(blockState[WallSignBlock.FACING].opposite) !in pivot)
             return false
 
         blockEntity = world.getBlockEntity(pos)!!

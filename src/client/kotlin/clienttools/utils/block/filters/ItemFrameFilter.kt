@@ -9,7 +9,7 @@ import net.minecraft.world.World
 object ItemFrameFilter : BlockSurfaceScanner.Filter() {
     private var itemFrame: ItemFrameEntity? = null
 
-    override fun allow(pos: BlockPos, world: World): Boolean {
+    override fun allow(pos: BlockPos, world: World, pivot: Set<BlockPos>): Boolean {
         val itemFrames = world.getEntitiesByClass(ItemFrameEntity::class.java, Box(pos)) { !it.heldItemStack.isEmpty }
         if (itemFrames.isEmpty())
             return false

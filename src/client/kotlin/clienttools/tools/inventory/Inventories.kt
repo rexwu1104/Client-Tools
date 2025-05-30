@@ -36,6 +36,10 @@ class Inventories(inventoryPositions: List<BlockPos>) {
         return BlockSurfaceScanner.scan(pos, world, Metadata.Collector)
     }
 
+    override fun toString(): String {
+        return "[${inventories.entries.joinToString { "${it.key}: ${it.value}" }}]"
+    }
+
     companion object {
         private val processors = IdentityHashMap<Block, PositionProcessor>()
 
@@ -71,10 +75,12 @@ class Inventories(inventoryPositions: List<BlockPos>) {
                 val signTargets = targets.filterIsInstance<BlockSurfaceScanner.Target.BlockEntity>()
                 val tooltip = signTargets
                     .map { it.blockEntity as SignBlockEntity }
-                    .flatMap { it.frontText.getMessages(true).toList() }
+                    .flatMap { sign -> sign.frontText.getMessages(true).map { it.string } }
                     .joinToString("\n")
                     .trim()
-                return Metadata(icon, tooltip)
+                return Metadata(icon, tooltip).apply {
+                    targets.clear()
+                }
             }
         }
     }

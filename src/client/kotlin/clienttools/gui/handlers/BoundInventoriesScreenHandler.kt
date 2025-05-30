@@ -1,5 +1,6 @@
 package clienttools.gui.handlers
 
+import clienttools.ClientToolsClient
 import clienttools.configs.world.WorldConfig
 import clienttools.gui.Types
 import clienttools.tools.inventory.Inventories
@@ -14,6 +15,10 @@ class BoundInventoriesScreenHandler(playerInventory: PlayerInventory) : ScreenHa
     private val inventories: Inventories = GlobalStorage
             .get<WorldConfig>(Constants.STORAGE_WORLD_CONFIG_KEY)!!
             .getInventories()
+
+    init {
+        ClientToolsClient.logger.info(inventories.toString())
+    }
 
     override fun quickMove(player: PlayerEntity, slot: Int): ItemStack {
         return ItemStack.EMPTY
